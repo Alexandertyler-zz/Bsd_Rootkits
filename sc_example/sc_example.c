@@ -2,9 +2,11 @@
 #include <sys/param.h>
 #include <sys/proc.h>
 #include <sys/module.h>
-#include <sysent.h>
+#include <sys/sysent.h>
 #include <sys/kernel.h>
 #include <sys/systm.h>
+
+#include <bsm/audit_kevents.h>
 
 struct sc_example_args
 {
@@ -32,7 +34,7 @@ static struct sysent sc_example_sysent =
 
 static int offset = NO_SYSCALL;
 
-ststic int
+static int
 load(struct module *module, int cmd, void *args)
 {
 	int error = 0;
