@@ -22,7 +22,7 @@ read_hook(struct thread *td, void *syscall_args)
 
 	int error;
 	char buf[1];
-	int done;
+	size_t done;
 
 	error = sys_read(td, syscall_args);
 
@@ -43,10 +43,12 @@ load(struct module *module, int cmd, void *args)
 	switch(cmd)
 	{
 	case MOD_LOAD:
+		uprintf("Module loaded.\n");
 		sysent[SYS_read].sy_call = (sy_call_t *)read_hook;
 		break;
 
 	case MOD_UNLOAD:
+		uprintf("Module unloaded.\n");
 		sysent[SYS_read].sy_call = (sy_call_t *)sys_read;
 		break;
 
