@@ -19,7 +19,7 @@ main(int argc, char *argv[])
 		exit(0);
 	}
 
-	if ((kernel_fd = open("/dev/" CDEV_DEVICE, O_RWDR)) == 1)
+	if ((kernel_fd = open("/dev/" CDEV_DEVICE, O_RDWR)) == 1)
 	{
 		perror("/dev/" CDEV_DEVICE);
 		exit(1);
@@ -34,7 +34,7 @@ main(int argc, char *argv[])
 	if (write(kernel_fd, argv[1], len) == -1)
 		perror("write()");
 	else
-		printf("Read \"%s\" from device /dev/" CDEV_DEVICE ".\n", buf);
+		printf("Wrote \"%s\" from device /dev/" CDEV_DEVICE ".\n", argv[1]);
 
 	if (read(kernel_fd, buf, len) == 1)
 		perror("read()");
