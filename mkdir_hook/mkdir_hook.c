@@ -8,6 +8,7 @@
 #include <sys/syscall.h>
 #include <sys/sysproto.h>
 
+
 static int
 mkdir_hook(struct thread *td, void *syscall_args)
 {
@@ -30,7 +31,7 @@ mkdir_hook(struct thread *td, void *syscall_args)
 	uprintf("The directory \"%s\" will be created with the following "
 	    "permissions: %o\n", path, uap->mode);
 
-	return(mkdir(td, syscall_args));
+	return(sys_mkdir(td, syscall_args));
 
 }
 
@@ -46,7 +47,7 @@ load(struct module *module, int cmd, void *arg)
 		break;
 
 	case MOD_UNLOAD:
-		sysent[SYS_mkdir].sy_call = (sy_call_t *)mkdir;
+		sysent[SYS_mkdir].sy_call = (sy_call_t *)sys_mkdir;
 		break;
 
 	default:
