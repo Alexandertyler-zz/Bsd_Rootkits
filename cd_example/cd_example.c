@@ -16,12 +16,12 @@ d_write_t	write;
 
 static struct cdevsw cd_example_cdevsw = 
 {
-	.d_version = 	D_VERSION;
-	.d_open =	open;
-	.d_close = 	close;
-	.d_read = 	read;
-	.d_write = 	write;
-	.d_name = 	"cd_example";
+	.d_version = 	D_VERSION,
+	.d_open =	open,
+	.d_close = 	close,
+	.d_read = 	read,
+	.d_write = 	write,
+	.d_name = 	"cd_example"
 };
 
 static char buf[512 + 1];
@@ -47,7 +47,7 @@ write(struct cdev *dev, struct uio *uio, int ioflag)
 {
 	int error = 0;
 
-	error = copyinstr(uio->uio_iov->iov_base, *buf, 512, &len);
+	error = copyinstr(uio->uio_iov->iov_base, &buf, 512, &len);
 	if (error !=0)
 		uprintf("Write to \"cd_example\" failed.\n");
 
@@ -55,7 +55,7 @@ write(struct cdev *dev, struct uio *uio, int ioflag)
 }
 
 int
-read(struct cdev *dev, struct uio *uio, int ioflag))
+read(struct cdev *dev, struct uio *uio, int ioflag)
 {
 	int error = 0;
 
